@@ -13,4 +13,14 @@ r = 0.05
 monthly_save = (yearly_salary * portion_saved) / 12
 annual_rate_month = amount_saved * (r/12)
 
+month = 0
 
+while amount_saved < down_payment_cost:
+    amount_saved += monthly_save
+
+    if month > 0:
+        amount_saved += amount_saved * (r/12)
+
+    month += 1
+
+print(int(month))
