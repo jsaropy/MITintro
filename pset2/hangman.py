@@ -174,7 +174,6 @@ def hangman(secret_word, with_help):
     print(f"I am thinking of a word that is {letters} letters long")
     
     while guesses > 0:
-        print(get_word_progress(secret_word,letters_guessed))
         print("--------------") 
         print(f"You have {guesses} guesses left")
         print("Available letters: ", get_available_letters(letters_guessed)) 
@@ -182,16 +181,18 @@ def hangman(secret_word, with_help):
 
         if str.isalpha(guess) and len(guess) == 1:
             if guess in letters_guessed:
-                print("Oops! You've already guessed that letter") 
+                print("Oops! You've already guessed that letter: ", get_word_progress(secret_word,letters_guessed)) 
                 continue
 
             letters_guessed.append(guess)
 
             if guess in secret_word:
-                print("Good guess: ") 
+                print("Good guess: ", get_word_progress(secret_word,letters_guessed)) 
+                print("--------------") 
             else:
-                print("Oops! That letter is not in my word!: ") 
+                print("Oops! That letter is not in my word!: ", get_word_progress(secret_word,letters_guessed))
 
+                print("--------------") 
                 if guess in vowels:
                     guesses -= 2
                 else:
@@ -202,12 +203,27 @@ def hangman(secret_word, with_help):
             letters_guessed.append(help)
             print("Letter revealed: ", help)
             guesses -= 3
+            print(get_word_progress(secret_word,letters_guessed))
+            print("--------------") 
             continue
         else:
             print("Oops! That is not a valid letter. Please input a letter from the alphabet: ")
+            print(get_word_progress(secret_word,letters_guessed))
+            print("--------------") 
             continue
+        
+        if get_word_progress(secret_word, letters_guessed) == secret_word:
+            unique_letters = []
+            for i in secret_word:
+                if i not in unique_letters:
+                    unique_letters.append(i)
 
-
+            total_score = (guesses + 4 * len(unique_letters) + (3 * len(secret_word)))
+            print("Congratulations, you won!")
+            print("Your total score for this game is: ", total_score)
+            break
+    
+    print("Sorry, you ran out of guesses. The word was", secret_word)
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the lines to test
