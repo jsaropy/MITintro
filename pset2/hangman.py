@@ -198,9 +198,9 @@ def hangman(secret_word, with_help):
                     guesses -= 1
                 continue
         elif guess == '!' and with_help == True:
-            print("Help Activated")
             help = helper_function(secret_word, get_available_letters(letters_guessed))
             letters_guessed.append(help)
+            print("Letter revealed: ", help)
             guesses -= 3
             continue
         else:
